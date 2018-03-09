@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="993a779b2f974a739dd8c620e93ce874" Name="Diagram1">
+        <EntityTypeShape EntityType="ogrenciModel.bolum" Width="1.5" PointX="5.375" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ogrenciModel.dersler" Width="1.5" PointX="5.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ogrenciModel.hocalar" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ogrenciModel.memleket" Width="1.5" PointX="6.625" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ogrenciModel.ogrenci" Width="1.5" PointX="8.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ogrenciModel.unvanlar" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="ogrenciModel.FK__ogrenci__bolkod__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="ogrenciModel.FK__dersler__hocasi__182C9B23" ManuallyRouted="false" />
+        <AssociationConnector Association="ogrenciModel.FK__hocalar__unvani__145C0A3F" ManuallyRouted="false" />
+        <AssociationConnector Association="ogrenciModel.FK__ogrenci__h_ID__1FCDBCEB" ManuallyRouted="false" />
+        <AssociationConnector Association="ogrenciModel.FK__ogrenci__memleke__20C1E124" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

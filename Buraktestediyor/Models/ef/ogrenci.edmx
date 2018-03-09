@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ogrenciModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="bolum">
+          <Key>
+            <PropertyRef Name="bolkod" />
+          </Key>
+          <Property Name="bolkod" Type="smallint" Nullable="false" />
+          <Property Name="bol_adi" Type="char" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="dersler">
+          <Key>
+            <PropertyRef Name="op_kod" />
+          </Key>
+          <Property Name="op_kod" Type="smallint" Nullable="false" />
+          <Property Name="ders_kod" Type="char" MaxLength="10" />
+          <Property Name="ders_adi" Type="char" MaxLength="20" />
+          <Property Name="donem" Type="tinyint" />
+          <Property Name="teori" Type="tinyint" />
+          <Property Name="pratik" Type="tinyint" />
+          <Property Name="hocasi" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="hocalar">
+          <Key>
+            <PropertyRef Name="h_ID" />
+          </Key>
+          <Property Name="h_ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="h_adi" Type="char" MaxLength="20" />
+          <Property Name="h_soyadi" Type="char" MaxLength="20" />
+          <Property Name="unvani" Type="tinyint" />
+          <Property Name="top_ders_saati" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="memleket">
+          <Key>
+            <PropertyRef Name="tr_kod" />
+          </Key>
+          <Property Name="tr_kod" Type="tinyint" Nullable="false" />
+          <Property Name="memleket_adi" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="tel_kod" Type="smallint" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'ogrenci.dbo.notlar' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="notlar">
+          <Property Name="no" Type="int" />
+          <Property Name="op_kod" Type="smallint" />
+          <Property Name="vize" Type="tinyint" />
+          <Property Name="mazeret" Type="tinyint" />
+          <Property Name="final" Type="tinyint" />
+          <Property Name="but" Type="tinyint" />
+        </EntityType>-->
+        <EntityType Name="ogrenci">
+          <Key>
+            <PropertyRef Name="no" />
+          </Key>
+          <Property Name="no" Type="int" Nullable="false" />
+          <Property Name="adi" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="soyadi" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="bolkod" Type="smallint" />
+          <Property Name="sinif" Type="tinyint" />
+          <Property Name="h_ID" Type="tinyint" />
+          <Property Name="dogum_tarihi" Type="datetime" Nullable="false" />
+          <Property Name="memleket" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="unvanlar">
+          <Key>
+            <PropertyRef Name="unvan_no" />
+          </Key>
+          <Property Name="unvan_no" Type="tinyint" Nullable="false" />
+          <Property Name="unvan_adi" Type="char" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK__dersler__hocasi__182C9B23">
+          <End Role="hocalar" Type="Self.hocalar" Multiplicity="0..1" />
+          <End Role="dersler" Type="Self.dersler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hocalar">
+              <PropertyRef Name="h_ID" />
+            </Principal>
+            <Dependent Role="dersler">
+              <PropertyRef Name="hocasi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__hocalar__unvani__145C0A3F">
+          <End Role="unvanlar" Type="Self.unvanlar" Multiplicity="0..1" />
+          <End Role="hocalar" Type="Self.hocalar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="unvanlar">
+              <PropertyRef Name="unvan_no" />
+            </Principal>
+            <Dependent Role="hocalar">
+              <PropertyRef Name="unvani" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+error 6004: The table 'ogrenci.dbo.notlar' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__notlar__no__22AA2996" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'ogrenci.dbo.notlar' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__notlar__op_kod__239E4DCF" />-->
+        <Association Name="FK__ogrenci__bolkod__1DE57479">
+          <End Role="bolum" Type="Self.bolum" Multiplicity="0..1" />
+          <End Role="ogrenci" Type="Self.ogrenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bolum">
+              <PropertyRef Name="bolkod" />
+            </Principal>
+            <Dependent Role="ogrenci">
+              <PropertyRef Name="bolkod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ogrenci__h_ID__1FCDBCEB">
+          <End Role="hocalar" Type="Self.hocalar" Multiplicity="0..1" />
+          <End Role="ogrenci" Type="Self.ogrenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hocalar">
+              <PropertyRef Name="h_ID" />
+            </Principal>
+            <Dependent Role="ogrenci">
+              <PropertyRef Name="h_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ogrenci__memleke__20C1E124">
+          <End Role="memleket" Type="Self.memleket" Multiplicity="0..1" />
+          <End Role="ogrenci" Type="Self.ogrenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="memleket">
+              <PropertyRef Name="tr_kod" />
+            </Principal>
+            <Dependent Role="ogrenci">
+              <PropertyRef Name="memleket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ogrenciModelStoreContainer">
+          <EntitySet Name="bolum" EntityType="Self.bolum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dersler" EntityType="Self.dersler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hocalar" EntityType="Self.hocalar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="memleket" EntityType="Self.memleket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ogrenci" EntityType="Self.ogrenci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="unvanlar" EntityType="Self.unvanlar" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__dersler__hocasi__182C9B23" Association="Self.FK__dersler__hocasi__182C9B23">
+            <End Role="hocalar" EntitySet="hocalar" />
+            <End Role="dersler" EntitySet="dersler" />
+          </AssociationSet>
+          <AssociationSet Name="FK__hocalar__unvani__145C0A3F" Association="Self.FK__hocalar__unvani__145C0A3F">
+            <End Role="unvanlar" EntitySet="unvanlar" />
+            <End Role="hocalar" EntitySet="hocalar" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ogrenci__bolkod__1DE57479" Association="Self.FK__ogrenci__bolkod__1DE57479">
+            <End Role="bolum" EntitySet="bolum" />
+            <End Role="ogrenci" EntitySet="ogrenci" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ogrenci__h_ID__1FCDBCEB" Association="Self.FK__ogrenci__h_ID__1FCDBCEB">
+            <End Role="hocalar" EntitySet="hocalar" />
+            <End Role="ogrenci" EntitySet="ogrenci" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ogrenci__memleke__20C1E124" Association="Self.FK__ogrenci__memleke__20C1E124">
+            <End Role="memleket" EntitySet="memleket" />
+            <End Role="ogrenci" EntitySet="ogrenci" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ogrenciModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="bolum">
+          <Key>
+            <PropertyRef Name="bolkod" />
+          </Key>
+          <Property Name="bolkod" Type="Int16" Nullable="false" />
+          <Property Name="bol_adi" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="ogrenci" Relationship="Self.FK__ogrenci__bolkod__1DE57479" FromRole="bolum" ToRole="ogrenci" />
+        </EntityType>
+        <EntityType Name="dersler">
+          <Key>
+            <PropertyRef Name="op_kod" />
+          </Key>
+          <Property Name="op_kod" Type="Int16" Nullable="false" />
+          <Property Name="ders_kod" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ders_adi" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="donem" Type="Byte" />
+          <Property Name="teori" Type="Byte" />
+          <Property Name="pratik" Type="Byte" />
+          <Property Name="hocasi" Type="Byte" />
+          <NavigationProperty Name="hocalar" Relationship="Self.FK__dersler__hocasi__182C9B23" FromRole="dersler" ToRole="hocalar" />
+        </EntityType>
+        <EntityType Name="hocalar">
+          <Key>
+            <PropertyRef Name="h_ID" />
+          </Key>
+          <Property Name="h_ID" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="h_adi" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="h_soyadi" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <Property Name="unvani" Type="Byte" />
+          <Property Name="top_ders_saati" Type="Byte" />
+          <NavigationProperty Name="dersler" Relationship="Self.FK__dersler__hocasi__182C9B23" FromRole="hocalar" ToRole="dersler" />
+          <NavigationProperty Name="unvanlar" Relationship="Self.FK__hocalar__unvani__145C0A3F" FromRole="hocalar" ToRole="unvanlar" />
+          <NavigationProperty Name="ogrenci" Relationship="Self.FK__ogrenci__h_ID__1FCDBCEB" FromRole="hocalar" ToRole="ogrenci" />
+        </EntityType>
+        <EntityType Name="memleket">
+          <Key>
+            <PropertyRef Name="tr_kod" />
+          </Key>
+          <Property Name="tr_kod" Type="Byte" Nullable="false" />
+          <Property Name="memleket_adi" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tel_kod" Type="Int16" />
+          <NavigationProperty Name="ogrenci" Relationship="Self.FK__ogrenci__memleke__20C1E124" FromRole="memleket" ToRole="ogrenci" />
+        </EntityType>
+        <EntityType Name="ogrenci">
+          <Key>
+            <PropertyRef Name="no" />
+          </Key>
+          <Property Name="no" Type="Int32" Nullable="false" />
+          <Property Name="adi" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="soyadi" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="bolkod" Type="Int16" />
+          <Property Name="sinif" Type="Byte" />
+          <Property Name="h_ID" Type="Byte" />
+          <Property Name="dogum_tarihi" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="memleket" Type="Byte" />
+          <NavigationProperty Name="bolum" Relationship="Self.FK__ogrenci__bolkod__1DE57479" FromRole="ogrenci" ToRole="bolum" />
+          <NavigationProperty Name="hocalar" Relationship="Self.FK__ogrenci__h_ID__1FCDBCEB" FromRole="ogrenci" ToRole="hocalar" />
+          <NavigationProperty Name="memleket1" Relationship="Self.FK__ogrenci__memleke__20C1E124" FromRole="ogrenci" ToRole="memleket" />
+        </EntityType>
+        <EntityType Name="unvanlar">
+          <Key>
+            <PropertyRef Name="unvan_no" />
+          </Key>
+          <Property Name="unvan_no" Type="Byte" Nullable="false" />
+          <Property Name="unvan_adi" Type="String" MaxLength="20" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="hocalar" Relationship="Self.FK__hocalar__unvani__145C0A3F" FromRole="unvanlar" ToRole="hocalar" />
+        </EntityType>
+        <Association Name="FK__ogrenci__bolkod__1DE57479">
+          <End Role="bolum" Type="Self.bolum" Multiplicity="0..1" />
+          <End Role="ogrenci" Type="Self.ogrenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bolum">
+              <PropertyRef Name="bolkod" />
+            </Principal>
+            <Dependent Role="ogrenci">
+              <PropertyRef Name="bolkod" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__dersler__hocasi__182C9B23">
+          <End Role="hocalar" Type="Self.hocalar" Multiplicity="0..1" />
+          <End Role="dersler" Type="Self.dersler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hocalar">
+              <PropertyRef Name="h_ID" />
+            </Principal>
+            <Dependent Role="dersler">
+              <PropertyRef Name="hocasi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__hocalar__unvani__145C0A3F">
+          <End Role="unvanlar" Type="Self.unvanlar" Multiplicity="0..1" />
+          <End Role="hocalar" Type="Self.hocalar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="unvanlar">
+              <PropertyRef Name="unvan_no" />
+            </Principal>
+            <Dependent Role="hocalar">
+              <PropertyRef Name="unvani" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ogrenci__h_ID__1FCDBCEB">
+          <End Role="hocalar" Type="Self.hocalar" Multiplicity="0..1" />
+          <End Role="ogrenci" Type="Self.ogrenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hocalar">
+              <PropertyRef Name="h_ID" />
+            </Principal>
+            <Dependent Role="ogrenci">
+              <PropertyRef Name="h_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ogrenci__memleke__20C1E124">
+          <End Role="memleket" Type="Self.memleket" Multiplicity="0..1" />
+          <End Role="ogrenci" Type="Self.ogrenci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="memleket">
+              <PropertyRef Name="tr_kod" />
+            </Principal>
+            <Dependent Role="ogrenci">
+              <PropertyRef Name="memleket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ogrenciEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="bolum" EntityType="Self.bolum" />
+          <EntitySet Name="dersler" EntityType="Self.dersler" />
+          <EntitySet Name="hocalar" EntityType="Self.hocalar" />
+          <EntitySet Name="memleket" EntityType="Self.memleket" />
+          <EntitySet Name="ogrenci" EntityType="Self.ogrenci" />
+          <EntitySet Name="unvanlar" EntityType="Self.unvanlar" />
+          <AssociationSet Name="FK__ogrenci__bolkod__1DE57479" Association="Self.FK__ogrenci__bolkod__1DE57479">
+            <End Role="bolum" EntitySet="bolum" />
+            <End Role="ogrenci" EntitySet="ogrenci" />
+          </AssociationSet>
+          <AssociationSet Name="FK__dersler__hocasi__182C9B23" Association="Self.FK__dersler__hocasi__182C9B23">
+            <End Role="hocalar" EntitySet="hocalar" />
+            <End Role="dersler" EntitySet="dersler" />
+          </AssociationSet>
+          <AssociationSet Name="FK__hocalar__unvani__145C0A3F" Association="Self.FK__hocalar__unvani__145C0A3F">
+            <End Role="unvanlar" EntitySet="unvanlar" />
+            <End Role="hocalar" EntitySet="hocalar" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ogrenci__h_ID__1FCDBCEB" Association="Self.FK__ogrenci__h_ID__1FCDBCEB">
+            <End Role="hocalar" EntitySet="hocalar" />
+            <End Role="ogrenci" EntitySet="ogrenci" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ogrenci__memleke__20C1E124" Association="Self.FK__ogrenci__memleke__20C1E124">
+            <End Role="memleket" EntitySet="memleket" />
+            <End Role="ogrenci" EntitySet="ogrenci" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ogrenciModelStoreContainer" CdmEntityContainer="ogrenciEntities">
+          <EntitySetMapping Name="bolum">
+            <EntityTypeMapping TypeName="ogrenciModel.bolum">
+              <MappingFragment StoreEntitySet="bolum">
+                <ScalarProperty Name="bolkod" ColumnName="bolkod" />
+                <ScalarProperty Name="bol_adi" ColumnName="bol_adi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dersler">
+            <EntityTypeMapping TypeName="ogrenciModel.dersler">
+              <MappingFragment StoreEntitySet="dersler">
+                <ScalarProperty Name="op_kod" ColumnName="op_kod" />
+                <ScalarProperty Name="ders_kod" ColumnName="ders_kod" />
+                <ScalarProperty Name="ders_adi" ColumnName="ders_adi" />
+                <ScalarProperty Name="donem" ColumnName="donem" />
+                <ScalarProperty Name="teori" ColumnName="teori" />
+                <ScalarProperty Name="pratik" ColumnName="pratik" />
+                <ScalarProperty Name="hocasi" ColumnName="hocasi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hocalar">
+            <EntityTypeMapping TypeName="ogrenciModel.hocalar">
+              <MappingFragment StoreEntitySet="hocalar">
+                <ScalarProperty Name="h_ID" ColumnName="h_ID" />
+                <ScalarProperty Name="h_adi" ColumnName="h_adi" />
+                <ScalarProperty Name="h_soyadi" ColumnName="h_soyadi" />
+                <ScalarProperty Name="unvani" ColumnName="unvani" />
+                <ScalarProperty Name="top_ders_saati" ColumnName="top_ders_saati" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="memleket">
+            <EntityTypeMapping TypeName="ogrenciModel.memleket">
+              <MappingFragment StoreEntitySet="memleket">
+                <ScalarProperty Name="tr_kod" ColumnName="tr_kod" />
+                <ScalarProperty Name="memleket_adi" ColumnName="memleket_adi" />
+                <ScalarProperty Name="tel_kod" ColumnName="tel_kod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ogrenci">
+            <EntityTypeMapping TypeName="ogrenciModel.ogrenci">
+              <MappingFragment StoreEntitySet="ogrenci">
+                <ScalarProperty Name="no" ColumnName="no" />
+                <ScalarProperty Name="adi" ColumnName="adi" />
+                <ScalarProperty Name="soyadi" ColumnName="soyadi" />
+                <ScalarProperty Name="bolkod" ColumnName="bolkod" />
+                <ScalarProperty Name="sinif" ColumnName="sinif" />
+                <ScalarProperty Name="h_ID" ColumnName="h_ID" />
+                <ScalarProperty Name="dogum_tarihi" ColumnName="dogum_tarihi" />
+                <ScalarProperty Name="memleket" ColumnName="memleket" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="unvanlar">
+            <EntityTypeMapping TypeName="ogrenciModel.unvanlar">
+              <MappingFragment StoreEntitySet="unvanlar">
+                <ScalarProperty Name="unvan_no" ColumnName="unvan_no" />
+                <ScalarProperty Name="unvan_adi" ColumnName="unvan_adi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

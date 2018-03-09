@@ -1,0 +1,28 @@
+﻿@using Buraktestediyor.Models.ef;
+@model List<ogrenci>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>test</title>
+</head>
+<body>
+    <div> 
+        <table>
+            @foreach (var ogrenci in Model)
+            {
+                <tr>
+                    <td>@ogrenci.adi</td>
+                    <td>@ogrenci.memleket</td>
+                    <td>@ogrenci.sinif</td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
